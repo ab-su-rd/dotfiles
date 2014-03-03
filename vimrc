@@ -1,6 +1,5 @@
 set nocompatible " remove vintage vi compatibity
 
-" need to remap leader on top
 let mapleader = ","
 
 filetype off
@@ -15,9 +14,15 @@ Bundle 'gmarik/vundle'
 Bundle 'flazz/vim-colorschemes'
 " solarized colorscheme
 Bundle 'altercation/vim-colors-solarized'
+let g:solarized_termtrans=0
+call togglebg#map("<F2>")
 " ctrl-p
 Bundle 'kien/ctrlp.vim'
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+"let g:ctrlp_custom_ignore = */node_modules/*,*/.sass-cache/*,*/.git/*,*/bower_components/*,*/.tmp/*,*.jpg,*.png
+let g:ctrlp_custom_ignore = {
+	\ 'dir': '\v[\/](node_modules|bower_components|\.(tmp|git|sass-cache))'
+\ }
 nmap <C-p> :CtrlPMixed<CR>
 nmap <Leader><Leader> :CtrlPBuffer<CR>
 " nmap ; :CtrlPBuffer<CR> " explore using ; before remapping
@@ -28,12 +33,14 @@ nmap <Leader>e :NERDTreeToggle<CR>
 Bundle 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+Bundle 'edkolev/tmuxline.vim'
 " syntastic
 Bundle 'scrooloose/syntastic'
 " vim-coffee-script
 Bundle 'kchmck/vim-coffee-script'
 " tagbar
 Bundle 'majutsushi/tagbar'
+nmap <Leader>t :TagbarToggle<CR>
 " javascript - http://oli.me.uk/2013/06/29/equipping-vim-for-javascript/
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'pangloss/vim-javascript'
@@ -56,9 +63,28 @@ autocmd Filetype html source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
 
 Bundle 'scrooloose/nerdcommenter.git'
 
+Bundle 'terryma/vim-smooth-scroll'
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 25, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 25, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 25, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 25, 4)<CR>
+
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-colorscheme-switcher'
+let g:colorscheme_switcher_keep_background=1
+
+Bundle 'kien/rainbow_parentheses.vim'
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
+
 syntax enable
 set showcmd 	" display incomplete commands
 filetype plugin indent on " file type plugins (?) + indentation
+
+" mouse
+"set mouse=a
 
 " file management
 set nobackup
@@ -72,6 +98,7 @@ set noexpandtab
 set backspace=indent,eol,start
 set autoindent
 set copyindent
+"set preserveindent
 set smarttab
 
 " code related
@@ -88,12 +115,14 @@ nmap <Leader>q :nohlsearch<CR> " remove search highlight
 set wildmenu
 set wildmode=longest:full,full
 
+set cursorline
+
 " colors and other visuals
-set t_Co=256 " TODO: add conditional setting
-" let g:solarized_termcolors=256
+"set t_Co=256 " TODO: add conditional setting
+set t_Co=16
 set background=dark
 colorscheme solarized
-set cursorline
+"colorscheme railscasts
 let &colorcolumn="80,".join(range(120,999),",")
 " highlight ColorColumn ctermbg=236 " value specific to zenburn
 highlight ColorColumn ctermbg=0
@@ -102,14 +131,15 @@ highlight ColorColumn ctermbg=0
 set splitbelow " for :split
 set splitright " for :vsplit
 
-set scrolloff=5 " min 5 lines visible below the cursor
+set scrolloff=2 " min 5 lines visible below the cursor
 
 " mappings
 nmap j gj
 nmap k gk
 nmap <Leader>w :bp<CR>
 nmap <Leader>r :bn<CR>
-nmap <Leader>d :bd<CR>
+nmap <Leader>d :bp\|bd #<CR> " http://stackoverflow.com/questions/4465095/vim-delete-buffer-without-losing-the-split-window
+nmap <Leader>n :Scratch<CR> " create a scratch buffer
 
 set laststatus =2
 
@@ -123,4 +153,4 @@ set guifont=SourceCode\ Pro\ Medium
 set hidden " lets to switch from an unsaved buffer
 
 " find better places for these
-set wildignore+=*/node_modules/*,*/.sass-cache/*,*/.git/*,*/bower_components/*,*/.tmp/*,*.jpg,*.png
+" set wildignore+=*/node_modules/*,*/.sass-cache/*,*/.git/*,*/bower_components/*,*/.tmp/*,*.jpg,*.png
