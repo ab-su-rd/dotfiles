@@ -16,6 +16,8 @@ Bundle 'flazz/vim-colorschemes'
 Bundle 'altercation/vim-colors-solarized'
 let g:solarized_termtrans=0
 call togglebg#map("<F2>")
+" Gundo
+Bundle 'vim-scripts/Gundo'
 " ctrl-p
 Bundle 'kien/ctrlp.vim'
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -33,11 +35,16 @@ nmap <Leader>e :NERDTreeToggle<CR>
 Bundle 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='solarized'
 Bundle 'edkolev/tmuxline.vim'
 " syntastic
 Bundle 'scrooloose/syntastic'
 " vim-coffee-script
 Bundle 'kchmck/vim-coffee-script'
+" easytags
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-easytags'
+let g:easytags_updatetime_min=4000
 " tagbar
 Bundle 'majutsushi/tagbar'
 nmap <Leader>t :TagbarToggle<CR>
@@ -52,10 +59,14 @@ Bundle 'Valloric/YouCompleteMe'
 " might help.
 " " YCM gives you popups and splits by default that some people might not
 " like, so these should tidy it up a bit for you.
-" let g:ycm_add_preview_to_completeopt=0
-" let g:ycm_confirm_extra_conf=0
-" set completeopt-=preview
+ "let g:ycm_add_preview_to_completeopt=0
+ "let g:ycm_confirm_extra_conf=0
+ "set completeopt-=preview
+
+set noshowmode
 Bundle 'marijnh/tern_for_vim'
+let g:tern_show_argument_hints = 'on_move'
+let g:tern_show_signature_in_pum = 1
 
 Bundle 'docunext/closetag.vim'
 autocmd FileType html let b:closetag_html_style=1
@@ -69,9 +80,12 @@ noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 25, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 25, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 25, 4)<CR>
 
-Bundle 'xolox/vim-misc'
+"Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-colorscheme-switcher'
 let g:colorscheme_switcher_keep_background=1
+
+Bundle 'tpope/vim-fugitive'
+Bundle 'airblade/vim-gitgutter'
 
 Bundle 'kien/rainbow_parentheses.vim'
 "au VimEnter * RainbowParenthesesToggle
@@ -79,12 +93,17 @@ Bundle 'kien/rainbow_parentheses.vim'
 "au Syntax * RainbowParenthesesLoadSquare
 "au Syntax * RainbowParenthesesLoadBraces
 
+Bundle 'kshenoy/vim-signature'
+Bundle 'elzr/vim-json'
+Bundle 'tpope/vim-surround'
+Bundle 'koron/minimap-vim'
+
 syntax enable
 set showcmd 	" display incomplete commands
 filetype plugin indent on " file type plugins (?) + indentation
 
 " mouse
-"set mouse=a
+set mouse=a
 
 " file management
 set nobackup
@@ -122,7 +141,7 @@ set cursorline
 set t_Co=16
 set background=dark
 colorscheme solarized
-"colorscheme railscasts
+"colorscheme zenburn
 let &colorcolumn="80,".join(range(120,999),",")
 " highlight ColorColumn ctermbg=236 " value specific to zenburn
 highlight ColorColumn ctermbg=0
@@ -146,11 +165,15 @@ set laststatus =2
 set ttyfast
 
 " gui options
-set guioptions-=T
-set guifont=SourceCode\ Pro\ Medium
+set guioptions-=T guioptions-=m
+set guifont=SourceCode\ Pro\ Medium\ 9
+map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
 
 " buffers
 set hidden " lets to switch from an unsaved buffer
 
 " find better places for these
 " set wildignore+=*/node_modules/*,*/.sass-cache/*,*/.git/*,*/bower_components/*,*/.tmp/*,*.jpg,*.png
+
+
+set nu
