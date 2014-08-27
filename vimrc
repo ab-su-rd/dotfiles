@@ -14,7 +14,10 @@ Bundle 'gmarik/vundle'
 Bundle 'flazz/vim-colorschemes'
 " solarized colorscheme
 Bundle 'altercation/vim-colors-solarized'
-let g:solarized_termtrans=0
+let g:solarized_termtrans=1
+let g:solarized_visibility="high"
+let g:solarized_contrast="high"
+" let g:solarized_termcolors=16
 call togglebg#map("<F2>")
 " Gundo
 Bundle 'vim-scripts/Gundo'
@@ -33,12 +36,15 @@ Bundle 'scrooloose/nerdtree'
 nmap <Leader>e :NERDTreeToggle<CR>
 " vim-airline
 Bundle 'bling/vim-airline'
+let g:airline_theme='solarized'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='solarized'
+let g:airline#extensions#tmuxline#enabled = 1
 Bundle 'edkolev/tmuxline.vim'
 " syntastic
 Bundle 'scrooloose/syntastic'
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_aggregate_errors = 1
 " vim-coffee-script
 Bundle 'kchmck/vim-coffee-script'
 " easytags
@@ -65,12 +71,13 @@ Bundle 'Valloric/YouCompleteMe'
 
 set noshowmode
 Bundle 'marijnh/tern_for_vim'
-let g:tern_show_argument_hints = 'on_move'
+let g:tern_show_argument_hints = 'on_hold'
 let g:tern_show_signature_in_pum = 1
 
-Bundle 'docunext/closetag.vim'
-autocmd FileType html let b:closetag_html_style=1
-autocmd Filetype html source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+"Bundle 'docunext/closetag.vim'
+"autocmd FileType html let b:closetag_html_style=1
+"autocmd Filetype html source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+" Bundle 'mattn/emmet-vim'
 
 Bundle 'scrooloose/nerdcommenter.git'
 
@@ -82,7 +89,7 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 25, 4)<CR>
 
 "Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-colorscheme-switcher'
-let g:colorscheme_switcher_keep_background=1
+let g:colorscheme_switcher_keep_background=0
 
 Bundle 'tpope/vim-fugitive'
 Bundle 'airblade/vim-gitgutter'
@@ -97,6 +104,13 @@ Bundle 'kshenoy/vim-signature'
 Bundle 'elzr/vim-json'
 Bundle 'tpope/vim-surround'
 Bundle 'koron/minimap-vim'
+
+" markdown
+Bundle 'godlygeek/tabular'
+Bundle 'plasticboy/vim-markdown'
+
+" alignment
+Bundle 'junegunn/vim-easy-align'
 
 syntax enable
 set showcmd 	" display incomplete commands
@@ -137,11 +151,10 @@ set wildmode=longest:full,full
 set cursorline
 
 " colors and other visuals
-"set t_Co=256 " TODO: add conditional setting
-set t_Co=16
+set t_Co=256 " TODO: add conditional setting
+"set t_Co=16
 set background=dark
 colorscheme solarized
-"colorscheme zenburn
 let &colorcolumn="80,".join(range(120,999),",")
 " highlight ColorColumn ctermbg=236 " value specific to zenburn
 highlight ColorColumn ctermbg=0
@@ -175,5 +188,6 @@ set hidden " lets to switch from an unsaved buffer
 " find better places for these
 " set wildignore+=*/node_modules/*,*/.sass-cache/*,*/.git/*,*/bower_components/*,*/.tmp/*,*.jpg,*.png
 
-
 set nu
+set timeoutlen=500
+" set fillchars+=stl:\ ,stlnc:\
