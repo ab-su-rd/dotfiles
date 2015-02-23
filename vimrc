@@ -1,193 +1,233 @@
-set nocompatible " remove vintage vi compatibity
+" remove vintage vi compatibility
+set nocompatible
 
-let mapleader = ","
-
-filetype off
 set encoding=utf-8
+set scrolloff=3
+set showmode
+set showcmd
 
-" vundle
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
-Bundle 'gmarik/vundle'
-" extra packages/plugins
-" 256 colorschemes for the terminal
-Bundle 'flazz/vim-colorschemes'
-" solarized colorscheme
-Bundle 'altercation/vim-colors-solarized'
-let g:solarized_termtrans=1
-let g:solarized_visibility="high"
-let g:solarized_contrast="high"
-" let g:solarized_termcolors=16
-call togglebg#map("<F2>")
-" Gundo
-Bundle 'vim-scripts/Gundo'
-" ctrl-p
-Bundle 'kien/ctrlp.vim'
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-"let g:ctrlp_custom_ignore = */node_modules/*,*/.sass-cache/*,*/.git/*,*/bower_components/*,*/.tmp/*,*.jpg,*.png
-let g:ctrlp_custom_ignore = {
-	\ 'dir': '\v[\/](node_modules|bower_components|\.(tmp|git|sass-cache))'
-\ }
-nmap <C-p> :CtrlPMixed<CR>
-nmap <Leader><Leader> :CtrlPBuffer<CR>
-" nmap ; :CtrlPBuffer<CR> " explore using ; before remapping
-" NERDTree
-Bundle 'scrooloose/nerdtree'
-nmap <Leader>e :NERDTreeToggle<CR>
-" vim-airline
-Bundle 'bling/vim-airline'
+set wildmenu
+set wildmode=list:longest
+
+set visualbell
+set cursorline
+
+set ttyfast
+set ruler
+set laststatus=2
+
+" numbering
+set number
+set relativenumber
+
+set undofile
+set nobackup
+set noswapfile
+
+" code
+set showmatch
+
+" splitting
+set splitbelow
+set splitright
+
+" remapping leader
+let mapleader = "\\"
+
+" vim-plug is the plugin manager
+" [url]
+" https://github.com/junegunn/vim-plug
+" [installation]
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+call plug#begin('~/.vim/plugged')
+
+" async execution
+
+Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
+
+" defaults
+
+Plug 'tpope/vim-sensible'
+
+" display
+
+Plug 'edkolev/tmuxline.vim'
+
+Plug 'bling/vim-airline'
 let g:airline_theme='solarized'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tmuxline#enabled = 1
-Bundle 'edkolev/tmuxline.vim'
-" syntastic
-Bundle 'scrooloose/syntastic'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_aggregate_errors = 1
-" vim-coffee-script
-Bundle 'kchmck/vim-coffee-script'
-" easytags
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-easytags'
-let g:easytags_updatetime_min=4000
-" tagbar
-Bundle 'majutsushi/tagbar'
-nmap <Leader>t :TagbarToggle<CR>
-" javascript - http://oli.me.uk/2013/06/29/equipping-vim-for-javascript/
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'pangloss/vim-javascript'
-Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'Raimondi/delimitMate'
-imap <C-c> <CR><Esc>O
-Bundle 'Valloric/YouCompleteMe'
-" These are the tweaks I apply to YCM's config, you don't need them but they
-" might help.
-" " YCM gives you popups and splits by default that some people might not
-" like, so these should tidy it up a bit for you.
- "let g:ycm_add_preview_to_completeopt=0
- "let g:ycm_confirm_extra_conf=0
- "set completeopt-=preview
+let g:airline#extensions#whitespace#enabled = 1
 
-set noshowmode
-Bundle 'marijnh/tern_for_vim'
+
+" color schemes
+
+Plug 'flazz/vim-colorschemes'
+
+Plug 'altercation/vim-colors-solarized'
+let g:solarized_termtrans=1
+let g:solarized_visibility="normal"
+let g:solarized_contrast="normal"
+let g:solarized_termcolors=16
+
+" navigation
+
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+nmap <Leader>e :NERDTreeToggle<CR>
+
+Plug 'Shougo/unite.vim'
+
+" motion
+
+Plug 'Lokaltog/vim-easymotion'
+
+Plug 'terryma/vim-smooth-scroll'
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+" tags
+
+Plug 'majutsushi/tagbar'
+
+Plug 'vim-php/tagbar-phpctags.vim', { 'do' : 'make' }
+let g:tagbar_phpctags_bin = '~/.vim/plugged/tagbar-phpctags.vim/bin/phpctags'
+nmap <Leader>t :TagbarToggle<CR>
+
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
+
+" editing
+
+Plug 'vim-scripts/Gundo', { 'on': 'GundoToggle' }
+
+" commenting
+Plug 'scrooloose/nerdcommenter'
+
+" alignment
+
+Plug 'junegunn/vim-easy-align'
+
+" git
+
+Plug 'esneider/YUNOcommit.vim'
+let g:YUNOcommit_after = 10
+
+Plug 'airblade/vim-gitgutter'
+
+Plug 'tpope/vim-fugitive'
+
+" code
+
+Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive && ./install.sh' }
+
+Plug 'scrooloose/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+let g:syntastic_php_phpcs_args = '--report=csv --standard=PSR2'
+"let g:syntastic_mode_map = { 'mode': 'active',
+    "\ 'active_filetypes': [],
+    "\ 'passive_filetypes': ['php']
+    "\ }
+
+Plug 'jiangmiao/auto-pairs'
+
+" languages
+
+" css
+
+Plug 'ap/vim-css-color'
+
+" javascript
+
+Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 let g:tern_show_argument_hints = 'on_hold'
 let g:tern_show_signature_in_pum = 1
 
-"Bundle 'docunext/closetag.vim'
-"autocmd FileType html let b:closetag_html_style=1
-"autocmd Filetype html source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
-" Bundle 'mattn/emmet-vim'
+" php
 
-Bundle 'scrooloose/nerdcommenter.git'
+" below plugins are failing on the tv-api codebase - on vendor code
+"Plug 'm2mdas/phpcomplete-extended', { 'do': 'make -f make_mac.mak' }
+"autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
 
-Bundle 'terryma/vim-smooth-scroll'
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 25, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 25, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 25, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 25, 4)<CR>
+"Plug 'm2mdas/phpcomplete-extended-laravel'
 
-"Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-colorscheme-switcher'
-let g:colorscheme_switcher_keep_background=0
+" editorconfig
 
-Bundle 'tpope/vim-fugitive'
-Bundle 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
 
-Bundle 'kien/rainbow_parentheses.vim'
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
+" misc
+Plug 'duff/vim-scratch'
 
-Bundle 'kshenoy/vim-signature'
-Bundle 'elzr/vim-json'
-Bundle 'tpope/vim-surround'
-Bundle 'koron/minimap-vim'
+call plug#end()
 
-" markdown
-Bundle 'godlygeek/tabular'
-Bundle 'plasticboy/vim-markdown'
-
-" alignment
-Bundle 'junegunn/vim-easy-align'
-
-syntax enable
-set showcmd 	" display incomplete commands
-filetype plugin indent on " file type plugins (?) + indentation
+" modifications
+nmap j gj
+nmap k gk
 
 " mouse
 set mouse=a
 
-" file management
-set nobackup
-set noswapfile
-set undofile
-
-" indentation
-set tabstop=4
-set shiftwidth=4
-set noexpandtab
-set backspace=indent,eol,start
-set autoindent
-set copyindent
-"set preserveindent
-set smarttab
-
-" code related
-set showmatch
-
-" searching
-set hlsearch
+" search
 set incsearch
 set ignorecase
 set smartcase
-nmap <Leader>q :nohlsearch<CR> " remove search highlight
+set hlsearch
+set showmatch
+nmap <Leader>q :nohlsearch<CR>
 
-" autocomplete for commands
-set wildmenu
-set wildmode=longest:full,full
+" tabs
+set smarttab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
 
-set cursorline
-
-" colors and other visuals
-set t_Co=256 " TODO: add conditional setting
-"set t_Co=16
-set background=dark
-colorscheme solarized
-let &colorcolumn="80,".join(range(120,999),",")
-" highlight ColorColumn ctermbg=236 " value specific to zenburn
-highlight ColorColumn ctermbg=0
-
-" splitting
-set splitbelow " for :split
-set splitright " for :vsplit
-
-set scrolloff=2 " min 5 lines visible below the cursor
-
-" mappings
-nmap j gj
-nmap k gk
-nmap <Leader>w :bp<CR>
-nmap <Leader>r :bn<CR>
+" buffer switching
+nmap <Leader>r :bnext<CR>
+nmap <Leader>w :bprev<CR>
 nmap <Leader>d :bp\|bd #<CR> " http://stackoverflow.com/questions/4465095/vim-delete-buffer-without-losing-the-split-window
 nmap <Leader>n :Scratch<CR> " create a scratch buffer
+set hidden
 
-set laststatus =2
+" insert new line and position cursor for insert
+imap <C-c> <CR><Esc>O
 
-set ttyfast
+" long lines
+set wrap
 
-" gui options
-set guioptions-=T guioptions-=m
-set guifont=SourceCode\ Pro\ Medium\ 9
-map <silent> <F11> :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
+" colors
+set background=dark
+try
+    colorscheme solarized
+catch
+endtry
 
-" buffers
-set hidden " lets to switch from an unsaved buffer
+" set list
+" set listchars=tab:▸\ ,eol:¬
 
-" find better places for these
-" set wildignore+=*/node_modules/*,*/.sass-cache/*,*/.git/*,*/bower_components/*,*/.tmp/*,*.jpg,*.png
+" highlight 80th column, and everything beyond the 120th column
+if (exists('+colorcolumn'))
+    let &colorcolumn="80,".join(range(120,999),",")
+    highlight ColorColumn ctermbg=0
+endif
 
-set nu
-set timeoutlen=500
-" set fillchars+=stl:\ ,stlnc:\
+" filesystem
+call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern', 'node_modules\|bower_components')
+nnoremap <C-p> :Unite -no-split -start-insert -auto-preview file_rec/async<CR>
+
+" TODO
+" ack/ag
+" airline
+" unite
+" php
+" html/javascript/css
