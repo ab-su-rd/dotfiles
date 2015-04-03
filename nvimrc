@@ -40,7 +40,7 @@ let mapleader = ","
 " [installation]
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 "   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.nvim/plugged')
 
 " async execution
 
@@ -149,11 +149,6 @@ Plug 'ap/vim-css-color'
 
 " javascript
 
-" via: http://oli.me.uk/2013/06/29/equipping-vim-for-javascript/
-Plug 'jelera/vim-javascript-syntax'
-Plug 'pangloss/vim-javascript'
-Plug 'nathanaelkane/vim-indent-guides'
-
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 let g:tern_show_argument_hints = 'on_hold'
 let g:tern_show_signature_in_pum = 1
@@ -179,9 +174,6 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep --ignore-dir=node_modules --ignore-dir=vendor --ignore-dir=bower_components'
 endif
 set wildignore+=*/node_modules/*,*/.sass-cache/*,*/.git/*,*/bower_components/*,*/.tmp/*,*.jpg,*.png
-
-" Dash integration
-Plug 'rizzatti/dash.vim'
 
 call plug#end()
 
@@ -239,7 +231,7 @@ endif
 " filesystem
 call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern', 'node_modules\|bower_components\|vendor')
 nnoremap <C-p> :Unite -no-split -start-insert -auto-preview file_rec/async<CR>
-nnoremap <Leader><Leader> :Unite -no-split -start-insert -auto-preview buffer<CR>
+nnoremap <Leader><Leader> :Unite buffer<CR>
 nnoremap <Leader>c :UniteClose<CR>
 
 " TODO
@@ -248,4 +240,3 @@ nnoremap <Leader>c :UniteClose<CR>
 " unite
 " php
 " html/javascript/css
-" https://github.com/joyent/node/wiki/Vim-Plugins
