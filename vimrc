@@ -79,7 +79,7 @@ Plug 'chriskempson/base16-vim'
 
 Plug 'yosiat/oceanic-next-vim'
 
-Plug 'itchyny/lightline.vim'
+"Plug 'itchyny/lightline.vim'
 
 " navigation
 
