@@ -10,7 +10,7 @@ set wildmenu
 set wildmode=list:longest
 
 set visualbell
-set cursorline
+"set cursorline
 
 set ttyfast
 set ruler
@@ -34,6 +34,8 @@ set splitright
 " remapping leader
 let mapleader = ","
 
+set t_Co=256
+
 " vim-plug is the plugin manager
 " [url]
 " https://github.com/junegunn/vim-plug
@@ -55,7 +57,7 @@ Plug 'tpope/vim-sensible'
 Plug 'edkolev/tmuxline.vim'
 
 Plug 'bling/vim-airline'
-let g:airline_theme='solarized'
+let g:airline_theme='base16'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#whitespace#enabled = 1
@@ -65,11 +67,19 @@ let g:airline#extensions#whitespace#enabled = 1
 
 Plug 'flazz/vim-colorschemes'
 
+Plug 'daylerees/colour-schemes', { 'rtp': 'vim/' }
+
 Plug 'altercation/vim-colors-solarized'
-let g:solarized_termtrans=1
-let g:solarized_visibility="normal"
-let g:solarized_contrast="normal"
-let g:solarized_termcolors=16
+"let g:solarized_termtrans=1
+"let g:solarized_visibility="normal"
+"let g:solarized_contrast="normal"
+"let g:solarized_termcolors=16
+
+Plug 'chriskempson/base16-vim'
+
+Plug 'yosiat/oceanic-next-vim'
+
+Plug 'itchyny/lightline.vim'
 
 " navigation
 
@@ -223,7 +233,8 @@ set wrap
 " colors
 set background=dark
 try
-    colorscheme solarized
+    let base16colorspace=16
+    colorscheme base16-ocean
 catch
 endtry
 
