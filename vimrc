@@ -1,6 +1,13 @@
 " remove vintage vi compatibility
 set nocompatible
 
+" load vim 8 defaults
+unlet! skip_defaults_vim
+runtime defaults.vim
+
+" remapping leader
+let mapleader = ","
+
 set encoding=utf-8
 set scrolloff=3
 set showmode
@@ -10,7 +17,7 @@ set wildmenu
 set wildmode=list:longest
 
 set visualbell
-"set cursorline
+set cursorline
 
 set ttyfast
 set ruler
@@ -31,174 +38,6 @@ set showmatch
 set splitbelow
 set splitright
 
-" remapping leader
-let mapleader = ","
-
-set t_Co=256
-
-" vim-plug is the plugin manager
-" [url]
-" https://github.com/junegunn/vim-plug
-" [installation]
-" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-"   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-call plug#begin('~/.vim/plugged')
-
-" async execution
-
-Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
-
-" defaults
-
-Plug 'tpope/vim-sensible'
-
-" display
-
-Plug 'edkolev/tmuxline.vim'
-
-Plug 'bling/vim-airline'
-let g:airline_theme='base16'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#whitespace#enabled = 1
-
-
-" color schemes
-
-Plug 'flazz/vim-colorschemes'
-
-Plug 'daylerees/colour-schemes', { 'rtp': 'vim/' }
-
-Plug 'altercation/vim-colors-solarized'
-"let g:solarized_termtrans=1
-"let g:solarized_visibility="normal"
-"let g:solarized_contrast="normal"
-"let g:solarized_termcolors=16
-
-Plug 'chriskempson/base16-vim'
-
-Plug 'yosiat/oceanic-next-vim'
-
-"Plug 'itchyny/lightline.vim'
-
-" navigation
-
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-nmap <Leader>e :NERDTreeToggle<CR>
-
-Plug 'Shougo/unite.vim'
-
-" motion
-
-Plug 'Lokaltog/vim-easymotion'
-
-Plug 'terryma/vim-smooth-scroll'
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-
-" tags
-
-Plug 'majutsushi/tagbar'
-
-Plug 'vim-php/tagbar-phpctags.vim', { 'do' : 'make' }
-let g:tagbar_phpctags_bin = '~/.vim/plugged/tagbar-phpctags.vim/bin/phpctags'
-nmap <Leader>t :TagbarToggle<CR>
-
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-easytags'
-
-" editing
-
-Plug 'vim-scripts/Gundo', { 'on': 'GundoToggle' }
-
-" commenting
-Plug 'scrooloose/nerdcommenter'
-
-" alignment
-
-Plug 'junegunn/vim-easy-align'
-
-" git
-
-Plug 'esneider/YUNOcommit.vim'
-let g:YUNOcommit_after = 10
-
-Plug 'airblade/vim-gitgutter'
-
-Plug 'tpope/vim-fugitive'
-
-" code
-
-Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive && ./install.sh' }
-
-Plug 'scrooloose/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-let g:syntastic_php_phpcs_args = '--report=csv --standard=PSR2'
-"let g:syntastic_mode_map = { 'mode': 'active',
-    "\ 'active_filetypes': [],
-    "\ 'passive_filetypes': ['php']
-    "\ }
-
-Plug 'jiangmiao/auto-pairs'
-
-" languages
-
-" css
-
-Plug 'ap/vim-css-color'
-
-" javascript
-
-" via: http://oli.me.uk/2013/06/29/equipping-vim-for-javascript/
-Plug 'jelera/vim-javascript-syntax'
-Plug 'pangloss/vim-javascript'
-Plug 'nathanaelkane/vim-indent-guides'
-
-Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
-let g:tern_show_argument_hints = 'on_hold'
-let g:tern_show_signature_in_pum = 1
-
-" php
-
-" below plugins are failing on the tv-api codebase - on vendor code
-"Plug 'm2mdas/phpcomplete-extended', { 'do': 'make -f make_mac.mak' }
-"autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
-
-"Plug 'm2mdas/phpcomplete-extended-laravel'
-
-" editorconfig
-
-Plug 'editorconfig/editorconfig-vim'
-
-" misc
-Plug 'duff/vim-scratch'
-
-" searching
-Plug 'mileszs/ack.vim'
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep --ignore-dir=node_modules --ignore-dir=vendor --ignore-dir=bower_components'
-endif
-set wildignore+=*/node_modules/*,*/.sass-cache/*,*/.git/*,*/bower_components/*,*/.tmp/*,*.jpg,*.png
-
-" Dash integration
-Plug 'rizzatti/dash.vim'
-
-call plug#end()
-
-" modifications
-nmap j gj
-nmap k gk
-
 " mouse
 set mouse=a
 
@@ -217,6 +56,202 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+" long lines
+set wrap
+
+" vim-plug is the plugin manager
+" [url]
+" https://github.com/junegunn/vim-plug
+" [installation]
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+call plug#begin('~/.vim/plugged')
+
+" async execution
+Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
+
+" defaults - discarded in favor of vim8 defaults.vim
+"Plug 'tpope/vim-sensible'
+
+" display
+ Plug 'vim-airline/vim-airline'
+ Plug 'vim-airline/vim-airline-themes'
+let g:airline_theme='solarized'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#whitespace#enabled = 1
+Plug 'edkolev/tmuxline.vim'
+
+" color schemes
+Plug 'flazz/vim-colorschemes'
+Plug 'altercation/vim-colors-solarized'
+let g:solarized_termtrans=1
+let g:solarized_visibility="normal"
+let g:solarized_contrast="normal"
+let g:solarized_termcolors=16
+
+" navigation
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+nmap <Leader>e :NERDTreeToggle<CR>
+
+" ctrl p
+Plug 'Shougo/denite.nvim'
+
+" motion
+Plug 'Lokaltog/vim-easymotion'
+Plug 'terryma/vim-smooth-scroll'
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+" undo
+Plug 'vim-scripts/Gundo', { 'on': 'GundoToggle' }
+
+" scratch buffer
+Plug 'duff/vim-scratch'
+
+" searching
+Plug 'mileszs/ack.vim'
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep --ignore-dir=node_modules --ignore-dir=vendor --ignore-dir=bower_components'
+endif
+set wildignore+=*/node_modules/*,*/.sass-cache/*,*/.git/*,*/bower_components/*,*/.tmp/*,*.jpg,*.png,*/vendor/*
+
+" git
+Plug 'esneider/YUNOcommit.vim'
+let g:YUNOcommit_after = 10
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+
+" editorconfig
+Plug 'editorconfig/editorconfig-vim'
+
+" commenting
+Plug 'scrooloose/nerdcommenter'
+
+" alignment
+Plug 'junegunn/vim-easy-align'
+
+" code auto complete
+Plug 'Shougo/neocomplete.vim'
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 1
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" snippets
+Plug 'Shougo/neosnippet.vim'
+"let g:neosnippet#enable_snipmate_compatibility = 1
+"let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets'
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+Plug 'honza/vim-snippets'
+Plug 'Shougo/neosnippet-snippets'
+
+" tags
+Plug 'majutsushi/tagbar'
+"Plug 'vim-php/tagbar-phpctags.vim'
+nmap <Leader>t :TagbarToggle<CR>
+
+" linting
+Plug 'w0rp/ale'
+let g:ale_linters = {
+            \ 'javascript': ['eslint'],
+            \}
+let g:ale_linter_aliases = {'stub': 'php'}
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+" add closing brackets
+Plug 'jiangmiao/auto-pairs'
+
+" css
+Plug 'ap/vim-css-color'
+
+" javascript
+" via: http://oli.me.uk/2013/06/29/equipping-vim-for-javascript/
+Plug 'jelera/vim-javascript-syntax'
+Plug 'pangloss/vim-javascript'
+Plug 'nathanaelkane/vim-indent-guides'
+
+" vue
+Plug 'posva/vim-vue'
+autocmd FileType vue syntax sync fromstart
+
+Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+let g:tern_show_argument_hints = 'on_hold'
+let g:tern_show_signature_in_pum = 1
+
+" php
+Plug 'StanAngeloff/php.vim'
+function! PhpSyntaxOverride()
+    hi! def link phpDocTags  phpDefine
+    hi! def link phpDocParam phpType
+endfunction
+
+augroup phpSyntaxOverride
+    autocmd!
+    autocmd FileType php call PhpSyntaxOverride()
+augroup END
+
+" autocomplete
+Plug 'shawncplus/phpcomplete.vim'
+let g:phpcomplete_parse_docblock_comments = 1
+let g:phpcomplete_cache_taglists = 1
+let g:phpcomplete_enhance_jump_to_definition = 1
+
+" php documentation generator
+" dependencies
+"Plug 'tobyS/vmustache'
+"Plug 'SirVer/ultisnips'
+"Plug 'honza/vim-snippets'
+" plugin
+"Plug 'tobyS/pdv'
+
+" php autocomplete
+"Plug 'm2mdas/phpcomplete-extended', { 'do': 'make -f make_mac.mak' }
+"let g:phpcomplete_index_composer_command = "php /usr/local/bin/composer"
+"autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
+"Plug 'm2mdas/phpcomplete-extended-laravel'
+"Plug 'padawan-php/padawan.vim'
+"let $PATH=$PATH . ':' . expand('~/.composer/vendor/bin')
+"let g:padawan#composer_command = "php /path/to/composer.phar"
+
+" golang
+Plug 'fatih/vim-go'
+let g:go_list_type = "quickfix"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+" docker
+Plug 'ekalinin/Dockerfile.vim'
+
+" Dash integration
+Plug 'rizzatti/dash.vim'
+
+call plug#end()
+
+" Denite - needs to be after plug#end()
+call denite#custom#var('file_rec', 'command',
+            \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+nnoremap <C-p> :Denite file_rec<CR>
+nnoremap <Leader><Leader> :Denite buffer<CR>
+
+" --- mappings ---
+
+" modifications
+nmap j gj
+nmap k gk
+
 " buffer switching
 nmap <Leader>r :bnext<CR>
 nmap <Leader>w :bprev<CR>
@@ -227,19 +262,12 @@ set hidden
 " insert new line and position cursor for insert
 imap <C-c> <CR><Esc>O
 
-" long lines
-set wrap
-
 " colors
 set background=dark
 try
-    let base16colorspace=16
-    colorscheme base16-ocean
+    colorscheme solarized
 catch
 endtry
-
-" set list
-" set listchars=tab:▸\ ,eol:¬
 
 " highlight 80th column, and everything beyond the 120th column
 if (exists('+colorcolumn'))
@@ -247,16 +275,10 @@ if (exists('+colorcolumn'))
     highlight ColorColumn ctermbg=0
 endif
 
-" filesystem
-call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern', 'node_modules\|bower_components\|vendor')
-nnoremap <C-p> :Unite -no-split -start-insert -auto-preview file_rec/async<CR>
-nnoremap <Leader><Leader> :Unite -no-split -start-insert -auto-preview buffer<CR>
-nnoremap <Leader>c :UniteClose<CR>
+" save file that requires sudo
+cmap w!! w !sudo tee % > /dev/null
 
 " TODO
 " ack/ag
-" airline
-" unite
-" php
-" html/javascript/css
 " https://github.com/joyent/node/wiki/Vim-Plugins
+" surround
